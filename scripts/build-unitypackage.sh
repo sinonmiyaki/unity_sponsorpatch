@@ -18,7 +18,10 @@ fi
 
 mkdir -p "$DIST_DIR"
 
-find "$PACKAGE_ROOT" -name "*.meta" -print0 | sort -z | while IFS= read -r -d '' meta_path; do
+{
+    printf "%s\0" "$PACKAGE_ROOT.meta"
+    find "$PACKAGE_ROOT" -name "*.meta" -print0
+} | sort -z | while IFS= read -r -d '' meta_path; do
     asset_path="${meta_path%.meta}"
     guid="$(awk '/^guid:/ { print $2; exit }' "$meta_path")"
 

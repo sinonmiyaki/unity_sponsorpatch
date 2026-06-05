@@ -2,36 +2,55 @@
 
 Unity 2022.3.22f1용 스폰서 텍스처 병합 에디터 툴입니다.
 
-야구복처럼 UV 언랩이 끝난 원본 PNG 위에, 같은 위치 기준으로 잘라 둔 투명 배경 스폰서 키트 PNG를 포토샵 레이어처럼 합성합니다.
+야구복처럼 UV 언랩이 끝난 원본 텍스처 위에, 같은 위치 기준으로 잘라 둔 투명 배경 스폰서 키트 텍스처를 포토샵 레이어처럼 합성합니다.
 
-`Apply`를 누르면 원본 PNG 파일 자체가 덮어써지고, 적용 전 파일은 같은 폴더에 `원본파일명_backup.png`로 백업됩니다.
+원본 PNG 파일을 덮어쓰지 않는 비파괴 방식입니다. Unity가 Play Mode에 들어가면 임시 병합 텍스처와 임시 머티리얼을 만들고, Play Mode가 끝나면 원래 머티리얼 상태로 되돌립니다.
 
 ## 설치
 
-GitHub Releases에서 `YUMESORA_MergeSponsor.unitypackage`를 내려받아 Unity 프로젝트로 드래그해서 임포트하면 됩니다.
+### VCC로 설치
+
+[Add to VCC](vcc://vpm/addRepo?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsinonmiyaki%2Funity_sponsorpatch%2Fmain%2Findex.json)
+
+위 링크가 열리지 않으면 VCC의 `Settings > Packages > Add Repository`에 아래 URL을 넣으면 됩니다.
+
+```text
+https://raw.githubusercontent.com/sinonmiyaki/unity_sponsorpatch/main/index.json
+```
+
+VCC에 repository를 추가한 뒤 프로젝트의 `Manage Project`에서 `YUMESORA Merge Sponsor`를 추가합니다.
+
+### unitypackage로 설치
+
+GitHub Releases에서 `YUMESORA_MergeSponsor.unitypackage`를 내려받아 Unity 프로젝트로 드래그해서 임포트해도 됩니다.
 
 직접 폴더로 넣고 싶다면 이 저장소의 `Assets/YUMESORA/MergeSponsor` 폴더를 Unity 프로젝트의 `Assets` 폴더 아래에 넣어도 됩니다.
 
-Unity 상단 메뉴에 `YUMESORA > Merge Sponsor`가 생깁니다.
+Unity 상단 메뉴에 `YUMESORA > Create Sponsor Tool`이 생깁니다.
+Hierarchy 우클릭 메뉴에는 `YUMESORA > Create Sponsor Tool`이 생깁니다.
 
 ## 사용법
 
-1. `YUMESORA > Merge Sponsor`를 엽니다.
-2. `Original PNG`에 원본 유니폼 PNG를 넣습니다.
-3. `Sponsor Kit PNG`에 투명 배경 스폰서 키트 PNG를 넣습니다.
-4. 필요하면 `Sponsor Opacity`, 자동 리사이즈 옵션을 조정합니다.
-5. `Apply To Original`을 누르면 원본 PNG가 병합 결과로 덮어써집니다.
+1. Hierarchy에서 아바타 루트를 우클릭합니다.
+2. `YUMESORA > Create Sponsor Tool`을 누릅니다.
+3. 생성된 `YUMESORA Sponsor Tool` 오브젝트의 Inspector를 엽니다.
+4. `Original Texture`에 유니폼 원본 텍스처를 넣습니다.
+5. `Sponsor Kits`에 스폰서 키트를 필요한 만큼 추가합니다.
+6. 필요하면 각 스폰서 키트의 이름, 활성 여부, opacity를 조정합니다.
+7. VRChat 업로드를 진행하거나 Unity Play Mode에 들어가면 임시 병합 텍스처가 적용됩니다.
+8. Play Mode가 끝나면 원래 머티리얼 텍스처로 복원됩니다.
 
-처음 적용할 때 `uniform.png`가 선택되어 있었다면 같은 폴더에 `uniform_backup.png`가 만들어집니다.
+머티리얼에서 원본 텍스처를 사용하는 슬롯만 교체합니다. 기본 텍스처 프로퍼티는 `_MainTex`이며, 필요하면 Inspector의 `Texture Property`에서 바꿀 수 있습니다.
 
-적용을 잘못했다면 같은 원본 PNG를 선택한 상태에서 `Revert From Backup`을 누르면 됩니다. 백업 PNG가 원본에 다시 복사되고, 백업 파일은 삭제됩니다.
+생성된 Sponsor Tool 오브젝트는 `EditorOnly` 태그를 사용합니다. 이 오브젝트는 업로드 결과물에 포함되지 않고, Play/VRC 업로드 준비 중에만 임시 병합을 수행하는 도우미 역할을 합니다.
 
 ## 추가 기능
 
-- 미리보기: 합성 결과를 툴 안에서 확인할 수 있습니다.
+- 비파괴 적용: 원본 PNG와 스폰서 키트 PNG 파일은 수정하지 않습니다.
+- Play/VRC 업로드 시 임시 적용: Play Mode 진입 시 임시 텍스처와 임시 머티리얼을 만들고, 종료 시 정리합니다.
+- 여러 스폰서 키트: 스폰서 키트를 여러 장 등록하고 순서대로 합성할 수 있습니다.
 - 자동 리사이즈: 스폰서 키트 해상도가 원본과 다르면 원본 크기에 맞춰 리사이즈해서 합성할 수 있습니다.
-- 되돌리기: `원본파일명_backup.png`를 원본에 복원하고 백업 파일을 삭제합니다.
-- import size 유지: 4096 같은 원본 해상도가 Unity max size 때문에 줄어들지 않도록 원본 import size를 맞춥니다.
+- Hierarchy 우클릭 생성: 아바타를 우클릭해서 대기 상태의 Sponsor Tool 오브젝트를 바로 만들 수 있습니다.
 
 ## 권장 텍스처 준비
 
@@ -40,7 +59,8 @@ Unity 상단 메뉴에 `YUMESORA > Merge Sponsor`가 생깁니다.
 - 2048 x 2048처럼 크기만 다르고 비율이 같은 스폰서 키트는 자동 리사이즈로 원본 크기에 맞춰 적용됩니다.
 - 원본과 스폰서 키트의 가로세로 비율이 다르면 왜곡을 막기 위해 적용되지 않습니다.
 - 스폰서가 없는 영역은 완전 투명 alpha 0으로 둡니다.
-- 백업 파일은 Revert 전까지 삭제하지 않는 것이 좋습니다.
+- 원본 텍스처가 머티리얼의 `_MainTex`가 아닌 다른 프로퍼티에 들어가 있다면 `Texture Property`를 맞춰야 합니다.
+- Unity import max size가 2048로 제한된 텍스처는 Play 중에도 2048 기준으로 읽힐 수 있습니다. 4096 결과가 필요하면 텍스처 import max size도 4096 이상으로 맞추는 것을 권장합니다.
 
 ## 릴리즈 만들기
 
@@ -48,6 +68,7 @@ Unity 상단 메뉴에 `YUMESORA > Merge Sponsor`가 생깁니다.
 
 ```bash
 bash scripts/build-unitypackage.sh
+bash scripts/build-vpm-package.sh
 ```
 
 GitHub Release는 태그를 푸시하면 자동으로 만들어집니다.
@@ -56,8 +77,20 @@ GitHub Release는 태그를 푸시하면 자동으로 만들어집니다.
 git add .
 git commit -m "Release YUMESORA Merge Sponsor"
 git push origin main
-git tag v1.0.0
-git push origin v1.0.0
+git tag v1.1.0
+git push origin v1.1.0
 ```
 
-태그가 푸시되면 GitHub Actions가 `dist/YUMESORA_MergeSponsor.unitypackage`를 빌드하고, 같은 이름의 파일을 Release asset으로 업로드합니다.
+태그가 푸시되면 GitHub Actions가 `dist/YUMESORA_MergeSponsor.unitypackage`와 `dist/com.yumesora.merge-sponsor-1.1.0.zip`을 빌드하고, 둘 다 Release asset으로 업로드합니다.
+
+VCC용 repository listing은 `index.json`입니다. 공개 링크는 다음 주소입니다.
+
+```text
+https://raw.githubusercontent.com/sinonmiyaki/unity_sponsorpatch/main/index.json
+```
+
+Add to VCC 링크는 다음 주소입니다.
+
+```text
+vcc://vpm/addRepo?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsinonmiyaki%2Funity_sponsorpatch%2Fmain%2Findex.json
+```

@@ -1,0 +1,16 @@
+{
+  "name": "com.yumesora.merge-sponsor",
+  "displayName": "YUMESORA Merge Sponsor",
+  "version": "1.1.0",
+  "unity": "2022.3",
+  "description": "Non-destructive Unity sponsor texture tool that temporarily merges sponsor kits during Play/VRC upload.",
+  "author": {
+    "name": "YUMESORA",
+    "email": "sinonmiyaki@users.noreply.github.com",
+    "url": "https://github.com/sinonmiyaki/unity_sponsorpatch"
+  },
+  "url": "https://github.com/sinonmiyaki/unity_sponsorpatch/releases/download/v1.1.0/com.yumesora.merge-sponsor-1.1.0.zip",
+  "documentationUrl": "https://github.com/sinonmiyaki/unity_sponsorpatch#readme",
+  "changelogUrl": "https://github.com/sinonmiyaki/unity_sponsorpatch/releases",
+  "vpmDependencies": {}
+}

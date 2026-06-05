@@ -1,12 +1,8 @@
 {
-    "name": "Yumesora.MergeSponsor.Editor",
-    "rootNamespace": "Yumesora.MergeSponsor.Editor",
-    "references": [
-        "Yumesora.MergeSponsor.Runtime"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "name": "Yumesora.MergeSponsor.Runtime",
+    "rootNamespace": "Yumesora.MergeSponsor",
+    "references": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
